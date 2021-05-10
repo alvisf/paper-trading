@@ -1,0 +1,37 @@
+version: '3.3'
+
+
+networks:
+  reverser_network:
+    external:
+      name: reverser_network
+
+services:
+  reverser_be:
+    container_name: reverser_be_service
+    build:
+      context: ../reverser-backend
+    ports:
+      - "5002:5002"
+    volumes:
+      - .:/home/app/api_sample
+    # environment:
+    #   app-env: "dev from docker compose"
+    # command: python app.py
+    networks:
+      - reverser_network
+
+  reverser_fe:
+    container_name: reverser_fe_service
+    build:
+      context: ../reverser-frontend
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/home/app/api_sample
+    environment:
+      # app-env: "dev from docker compose"
+      BACKEND_URL: 'http://reverser_be_service:5002'
+    # command: python app.py
+    networks:
+      - reverser_network

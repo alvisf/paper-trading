@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+
+kind: Deployment
+
+metadata:
+  name: paper-deployment
+  labels:
+    app: paper-deployment
+
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: paper-pod
+
+  template:
+    metadata:
+      name: paper-pod
+      labels:
+        app: paper-pod
+
+    spec:
+      containers:
+        - name: paper-container
+          image: tact-paper-trading
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 3009

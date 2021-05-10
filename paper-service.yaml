@@ -1,0 +1,17 @@
+apiVersion: v1
+
+kind: Service
+
+metadata:
+  name: paper-service
+  labels:
+    app: paper-service
+
+spec:
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3009
+  selector:
+    app: paper-pod
