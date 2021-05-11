@@ -1,18 +1,15 @@
-FROM alpine:latest
+FROM ubuntu:latest
 
-RUN apk add --no-cache python3-dev \
-    && apk add --no-cache py-pip
+RUN apt-get update -y
+RUN apt-get -y install python3.7
+RUN apt-get -y install python3-pip
 
 WORKDIR /app
 
 COPY . /app
 
-RUN echo "@testing http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
-RUN apk add --update --no-cache py3-numpy py3-pandas@testing
-
 RUN pip3 --no-cache install yfinance \ 
     && pip3 --no-cache-dir install -r requirements.txt
-
 
 EXPOSE 3009
 
